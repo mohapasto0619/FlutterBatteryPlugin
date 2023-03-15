@@ -17,5 +17,8 @@ abstract class BatteryPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<int?> getBatteryPourcentage();
+  Future<int?> getBatteryPourcentage() {
+    throw UnimplementedError(
+        'getBatteryPourcentage() has not been implemented.');
+  }
 }

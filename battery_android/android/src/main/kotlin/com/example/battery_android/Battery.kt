@@ -6,8 +6,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
+import com.example.battery_android.Battery.BatteryApi
 
-class Battery {
+/*class Battery {
     companion object {
         fun getBatteryPercentage(context: Context): Int {
             return if (Build.VERSION.SDK_INT >= 21) {
@@ -24,4 +25,4 @@ class Battery {
             }
         }
     }
-}
+}*/
