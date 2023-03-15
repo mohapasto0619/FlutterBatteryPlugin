@@ -26,4 +26,4 @@ flutter:
       android:
         package: com.example.battery_android
         pluginClass: BatteryAndroidPlugin
-#        dartPluginClass: BatteryAndroid
+        dartPluginClass: BatteryAndroid

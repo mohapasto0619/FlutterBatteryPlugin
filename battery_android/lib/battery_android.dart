@@ -1,8 +1,9 @@
+import 'package:battery_platform_interface/battery_api.dart';
 import 'package:battery_platform_interface/battery_platform_interface.dart';
 import 'package:flutter/services.dart';
 
 class BatteryAndroid extends BatteryPlatform {
-  final methodChannelBattery = const MethodChannel('battery_android');
+  final methodChannelBattery = BatteryApi();
 
   static void registerWith() {
     BatteryPlatform.instance = BatteryAndroid();
@@ -10,6 +11,6 @@ class BatteryAndroid extends BatteryPlatform {
 
   @override
   Future<int?> getBatteryPourcentage() {
-    return methodChannelBattery.invokeMethod<int>('getBatteryPourcentage');
+    return methodChannelBattery.getBatteryPourcentage();
   }
 }
