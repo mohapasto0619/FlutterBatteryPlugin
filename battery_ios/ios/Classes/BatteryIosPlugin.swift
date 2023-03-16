@@ -9,6 +9,13 @@ public class BatteryIosPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    switch (call.method) {
+        case "getBatteryPourcentage":
+            UIDevice.current.isBatteryMonitoringEnabled = true
+            let level = UIDevice.current.batteryLevel
+            result(Int(level)*100)
+        default:
+            result(FlutterMethodNotImplemented)
+    }
   }
 }
