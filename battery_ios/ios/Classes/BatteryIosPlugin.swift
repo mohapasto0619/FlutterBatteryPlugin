@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import Foundation
+import battery_ios
 
 public class BatteryIosPlugin: NSObject, FlutterPlugin, PrctBatteryApi {
     
