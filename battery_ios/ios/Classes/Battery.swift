@@ -30,24 +30,27 @@ private func wrapError(_ error: Any) -> [Any?] {
     "Stacktrace: \(Thread.callStackSymbols)"
   ]
 }
+
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol BatteryApi {
-  func getBatteryPourcentage() throws -> Int64
+protocol PrctBatteryApi {
+  func getBatteryPourcentage(completion: @escaping (Result<Int64, Error>) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class BatteryApiSetup {
-  /// The codec used by BatteryApi.
-  /// Sets up an instance of `BatteryApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: BatteryApi?) {
-    let getBatteryPourcentageChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.BatteryApi.getBatteryPourcentage", binaryMessenger: binaryMessenger)
+class PrctBatteryApiSetup {
+  /// The codec used by PrctBatteryApi.
+  /// Sets up an instance of `PrctBatteryApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: PrctBatteryApi?) {
+    let getBatteryPourcentageChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.PrctBatteryApi.getBatteryPourcentage", binaryMessenger: binaryMessenger)
     if let api = api {
       getBatteryPourcentageChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.getBatteryPourcentage()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
+        api.getBatteryPourcentage() { result in
+          switch result {
+            case .success(let res):
+              reply(wrapResult(res))
+            case .failure(let error):
+              reply(wrapError(error))
+          }
         }
       }
     } else {

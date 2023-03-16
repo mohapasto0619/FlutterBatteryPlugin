@@ -7,16 +7,16 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
 import androidx.annotation.NonNull
-import com.example.battery_android.Battery.BatteryApi
+import com.example.battery_android.Battery.PrctBatteryApi
+import com.example.battery_android.Battery.Result
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
 
 /** BatteryAndroidPlugin */
-class BatteryAndroidPlugin: FlutterPlugin, BatteryApi/*MethodCallHandler*/ {
+class BatteryAndroidPlugin: FlutterPlugin, PrctBatteryApi/*MethodCallHandler*/ {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -28,12 +28,12 @@ class BatteryAndroidPlugin: FlutterPlugin, BatteryApi/*MethodCallHandler*/ {
     //channel = MethodChannel(flutterPluginBinding.binaryMessenger, "battery_android")
     //channel.setMethodCallHandler(this)
     context = flutterPluginBinding.applicationContext
-    Battery.BatteryApi.setup(flutterPluginBinding.binaryMessenger, this, context)
+    Battery.PrctBatteryApi.setup(flutterPluginBinding.binaryMessenger, this, context)
   }
 
-  override fun getBatteryPourcentage(context: Context): Long {
+  override fun getBatteryPourcentage(result: Result<Long>?, context: Context) {
     val batteryLevel = getBatteryPercentage(context = context)
-    return batteryLevel.toLong()
+    result?.success(batteryLevel.toLong())
   }
 
   private fun getBatteryPercentage(context: Context): Int {
@@ -61,7 +61,7 @@ class BatteryAndroidPlugin: FlutterPlugin, BatteryApi/*MethodCallHandler*/ {
   }*/
 
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    Battery.BatteryApi.setup(binding.binaryMessenger, null, null)
+    Battery.PrctBatteryApi.setup(binding.binaryMessenger, null, null)
 
   }
 }

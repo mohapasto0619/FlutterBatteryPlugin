@@ -8,11 +8,11 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
-class BatteryApi {
-  /// Constructor for [BatteryApi].  The [binaryMessenger] named argument is
+class PrctBatteryApi {
+  /// Constructor for [PrctBatteryApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  BatteryApi({BinaryMessenger? binaryMessenger})
+  PrctBatteryApi({BinaryMessenger? binaryMessenger})
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
@@ -20,7 +20,7 @@ class BatteryApi {
 
   Future<int> getBatteryPourcentage() async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.BatteryApi.getBatteryPourcentage', codec,
+        'dev.flutter.pigeon.PrctBatteryApi.getBatteryPourcentage', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(null) as List<Object?>?;

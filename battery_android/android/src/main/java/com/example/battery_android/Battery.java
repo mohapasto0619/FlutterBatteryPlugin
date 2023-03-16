@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Generated class from Pigeon. */
-@SuppressWarnings({ "unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression" })
+@SuppressWarnings({"unused", "unchecked", "CodeBlock2Expr", "RedundantSuppression"})
 public class Battery {
   @NonNull
   private static ArrayList<Object> wrapError(@NonNull Throwable exception) {
@@ -29,44 +29,53 @@ public class Battery {
     errorList.add(exception.toString());
     errorList.add(exception.getClass().getSimpleName());
     errorList.add(
-        "Cause: " + exception.getCause() + ", Stacktrace: " + Log.getStackTraceString(exception));
+      "Cause: " + exception.getCause() + ", Stacktrace: " + Log.getStackTraceString(exception));
     return errorList;
   }
 
-  /**
-   * Generated interface from Pigeon that represents a handler of messages from
-   * Flutter.
-   */
-  public interface BatteryApi {
+  public interface Result<T> {
+    void success(T result);
 
-    @NonNull
-    Long getBatteryPourcentage(Context context);
+    void error(Throwable error);
+  }
+  /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+  public interface PrctBatteryApi {
 
-    /** The codec used by BatteryApi. */
+    void getBatteryPourcentage(Result<Long> result, Context context);
+
+    /** The codec used by PrctBatteryApi. */
     static MessageCodec<Object> getCodec() {
       return new StandardMessageCodec();
     }
-
-    /**
-     * Sets up an instance of `BatteryApi` to handle messages through the
-     * `binaryMessenger`.
-     */
-    static void setup(BinaryMessenger binaryMessenger, BatteryApi api, Context context) {
+    /**Sets up an instance of `PrctBatteryApi` to handle messages through the `binaryMessenger`. */
+    static void setup(BinaryMessenger binaryMessenger, PrctBatteryApi api, Context context) {
       {
-        BasicMessageChannel<Object> channel = new BasicMessageChannel<>(
-            binaryMessenger, "dev.flutter.pigeon.BatteryApi.getBatteryPourcentage", getCodec());
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.PrctBatteryApi.getBatteryPourcentage", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {
                 ArrayList<Object> wrapped = new ArrayList<Object>();
                 try {
-                  Long output = api.getBatteryPourcentage(context);
-                  wrapped.add(0, output);
+                  Result<Long> resultCallback =
+                      new Result<Long>() {
+                        public void success(Long result) {
+                          wrapped.add(0, result);
+                          reply.reply(wrapped);
+                        }
+
+                        public void error(Throwable error) {
+                          ArrayList<Object> wrappedError = wrapError(error);
+                          reply.reply(wrappedError);
+                        }
+                      };
+
+                  api.getBatteryPourcentage(resultCallback, context);
                 } catch (Error | RuntimeException exception) {
                   ArrayList<Object> wrappedError = wrapError(exception);
-                  wrapped = wrappedError;
+                  reply.reply(wrappedError);
                 }
-                reply.reply(wrapped);
               });
         } else {
           channel.setMessageHandler(null);
