@@ -1,6 +1,6 @@
 library battery_platform_interface;
 
-import 'package:battery_platform_interface/method_channel_battery.dart';
+import 'package:battery_platform_interface/battery.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 abstract class BatteryPlatform extends PlatformInterface {
@@ -8,7 +8,7 @@ abstract class BatteryPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static BatteryPlatform _instance = MethodChannelBattery();
+  static BatteryPlatform _instance = Battery();
 
   static BatteryPlatform get instance => _instance;
 

@@ -25,4 +25,4 @@ flutter:
     platforms:
       ios:
         pluginClass: BatteryIosPlugin
-        #dartPluginClass: BatteryIos
+        dartPluginClass: BatteryIos

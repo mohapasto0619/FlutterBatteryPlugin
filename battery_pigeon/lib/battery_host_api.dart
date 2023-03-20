@@ -1,7 +1,7 @@
 import 'package:pigeon/pigeon.dart';
 
 @HostApi()
-abstract class PrctBatteryApi {
+abstract class BatteryApi {
   @async
   int getBatteryPourcentage();
 }

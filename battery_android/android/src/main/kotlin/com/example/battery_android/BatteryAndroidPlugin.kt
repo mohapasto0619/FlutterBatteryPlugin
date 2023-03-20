@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
 import androidx.annotation.NonNull
-import com.example.battery_android.Battery.PrctBatteryApi
+import com.example.battery_android.Battery.BatteryApi
 import com.example.battery_android.Battery.Result
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -16,7 +16,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
 /** BatteryAndroidPlugin */
-class BatteryAndroidPlugin: FlutterPlugin, PrctBatteryApi/*MethodCallHandler*/ {
+class BatteryAndroidPlugin: FlutterPlugin, BatteryApi {
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -25,10 +25,8 @@ class BatteryAndroidPlugin: FlutterPlugin, PrctBatteryApi/*MethodCallHandler*/ {
   private lateinit var context: Context
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    //channel = MethodChannel(flutterPluginBinding.binaryMessenger, "battery_android")
-    //channel.setMethodCallHandler(this)
     context = flutterPluginBinding.applicationContext
-    Battery.PrctBatteryApi.setup(flutterPluginBinding.binaryMessenger, this, context)
+    Battery.BatteryApi.setup(flutterPluginBinding.binaryMessenger, this, context)
   }
 
   override fun getBatteryPourcentage(result: Result<Long>?, context: Context) {
@@ -51,17 +49,8 @@ class BatteryAndroidPlugin: FlutterPlugin, PrctBatteryApi/*MethodCallHandler*/ {
     }
   }
 
-  /*override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getBatteryPourcentage") {
-      val batteryPercentage = Battery.getBatteryPercentage(context)
-      result.success(batteryPercentage)
-    } else {
-      result.notImplemented()
-    }
-  }*/
-
   override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
-    Battery.PrctBatteryApi.setup(binding.binaryMessenger, null, null)
+    Battery.BatteryApi.setup(binding.binaryMessenger, null, null)
 
   }
 }
